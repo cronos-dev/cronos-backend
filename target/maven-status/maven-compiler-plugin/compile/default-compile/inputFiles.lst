@@ -1,9 +1,10 @@
 /Users/toshikijahja/cronos-backend/src/main/java/com/cronos/dao/BaseDao.java
+/Users/toshikijahja/cronos-backend/src/main/java/com/cronos/model/Restaurant.java
 /Users/toshikijahja/cronos-backend/src/main/java/com/cronos/model/User.java
 /Users/toshikijahja/cronos-backend/src/main/java/com/cronos/dao/UserDao.java
 /Users/toshikijahja/cronos-backend/src/main/java/com/cronos/dao/SessionUtil.java
 /Users/toshikijahja/cronos-backend/src/main/java/com/cronos/source/UserSource.java
-/Users/toshikijahja/cronos-backend/src/main/java/com/cronos/model/Task.java
-/Users/toshikijahja/cronos-backend/src/main/java/com/cronos/dao/TaskDao.java
+/Users/toshikijahja/cronos-backend/src/main/java/com/cronos/view/UserView.java
+/Users/toshikijahja/cronos-backend/src/main/java/com/cronos/model/Item.java
 /Users/toshikijahja/cronos-backend/src/main/java/com/cronos/dao/SessionProvider.java
 /Users/toshikijahja/cronos-backend/src/main/java/com/cronos/requestBody/CreateUserRequestBody.java

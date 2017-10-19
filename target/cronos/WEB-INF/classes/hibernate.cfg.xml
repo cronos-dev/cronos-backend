@@ -12,6 +12,7 @@
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">create</property>
         <mapping class="com.cronos.model.User"/>
-        <mapping class="com.cronos.model.Task"/>
+        <mapping class="com.cronos.model.Restaurant"/>
+        <mapping class="com.cronos.model.Item"/>
     </session-factory>
 </hibernate-configuration>
