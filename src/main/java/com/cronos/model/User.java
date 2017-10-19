@@ -1,24 +1,40 @@
 package com.cronos.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.math.BigDecimal;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
-    @Column (nullable = false)
+
+    @Column(nullable = false)
     private String firstName;
+
     @Column
     private String lastName;
+
+    @Column
+    private String email;
+
+    @Column
+    @Type(type="date")
+    private Date birthday;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
     @Column (columnDefinition = "tinyint default false")
     private boolean liner = false;
+
+    public enum Gender {
+        MALE, FEMALE;
+    }
 
     public User() {
 
@@ -27,6 +43,9 @@ public class User {
     public User(final Builder builder) {
         setFirstName(builder.firstName);
         setLastName(builder.lastName);
+        setEmail(builder.email);
+        setBirthday(builder.birthday);
+        setGender(builder.gender);
     }
 
     public int getId() {
@@ -53,16 +72,36 @@ public class User {
         this.lastName = lastName;
     }
 
-    public static class Builder {
+    public String getEmail() {
+        return this.email;
+    }
 
-        private int id;
+    public void setEmail(final String email) {
+        this.email = email;
+    }
+
+    public Date getBirthday() {
+        return this.birthday;
+    }
+
+    public void setBirthday(final Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Gender getGender() {
+        return this.gender;
+    }
+
+    public void setGender(final Gender gender) {
+        this.gender = gender;
+    }
+
+    public static class Builder {
         private String firstName;
         private String lastName;
-
-        public Builder id(final int id) {
-            this.id = id;
-            return this;
-        }
+        private String email;
+        private Date birthday;
+        private Gender gender;
 
         public Builder firstName(final String firstName) {
             this.firstName = firstName;
@@ -71,6 +110,21 @@ public class User {
 
         public Builder lastName(final String lastName) {
             this.lastName = lastName;
+            return this;
+        }
+
+        public Builder email(final String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder birthday(final Date birthday) {
+            this.birthday = birthday;
+            return this;
+        }
+
+        public Builder gender(final Gender gender) {
+            this.gender = gender;
             return this;
         }
 
