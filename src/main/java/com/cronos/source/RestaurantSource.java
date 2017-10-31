@@ -12,15 +12,16 @@ import javax.ws.rs.core.MediaType;
 /**
  * Created by toshikijahja on 10/18/17.
  */
+@Path("/restaurant")
 public class RestaurantSource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public RestaurantView createUser(final CreateRestaurantRequestBody createRestaurantRequestBody) {
+    public RestaurantView createRestaurant(final CreateRestaurantRequestBody createRestaurantRequestBody) {
         try (final SessionProvider sessionProvider = new SessionProvider()) {
             final RestaurantDao restaurantDao = new RestaurantDao(sessionProvider);
-            return restaurantDao.addRestaurant(createRestaurantRequestBody.getName());
+            return restaurantDao.addRestaurant(createRestaurantRequestBody);
         }
     }
 

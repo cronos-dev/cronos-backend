@@ -9,10 +9,10 @@
          id="WebApp_ID" version="2.5">
   <servlet>
     <servlet-name>Cronos</servlet-name>
-    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer </servlet-class>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
     <init-param>
-      <param-name>com.sun.jersey.config.property.packages</param-name>
-      <param-value>com.cronos</param-value>
+      <param-name>jersey.config.server.provider.packages</param-name>
+      <param-value >com.cronos</param-value>
     </init-param>
     <init-param>
       <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>

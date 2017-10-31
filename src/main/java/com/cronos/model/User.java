@@ -22,15 +22,8 @@ public class User {
     private String email;
 
     @Column
-    @Type(type="date")
-    private Date birthday;
-
-    @Column
     @Enumerated(EnumType.STRING)
     private Gender gender;
-
-    @Column (columnDefinition = "tinyint default false")
-    private boolean liner = false;
 
     public enum Gender {
         MALE, FEMALE;
@@ -44,7 +37,6 @@ public class User {
         setFirstName(builder.firstName);
         setLastName(builder.lastName);
         setEmail(builder.email);
-        setBirthday(builder.birthday);
         setGender(builder.gender);
     }
 
@@ -80,14 +72,6 @@ public class User {
         this.email = email;
     }
 
-    public Date getBirthday() {
-        return this.birthday;
-    }
-
-    public void setBirthday(final Date birthday) {
-        this.birthday = birthday;
-    }
-
     public Gender getGender() {
         return this.gender;
     }
@@ -100,7 +84,6 @@ public class User {
         private String firstName;
         private String lastName;
         private String email;
-        private Date birthday;
         private Gender gender;
 
         public Builder firstName(final String firstName) {
@@ -115,11 +98,6 @@ public class User {
 
         public Builder email(final String email) {
             this.email = email;
-            return this;
-        }
-
-        public Builder birthday(final Date birthday) {
-            this.birthday = birthday;
             return this;
         }
 

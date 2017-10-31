@@ -8,7 +8,7 @@ public class CreateUserRequestBody {
     private String firstName;
     private String lastName;
     private String email;
-    private long birthday;
+    private Long birthday;
     private String gender;
 
     public CreateUserRequestBody() {
@@ -43,7 +43,7 @@ public class CreateUserRequestBody {
         return this.birthday;
     }
 
-    public void setBirthday(final long birthday) {
+    public void setBirthday(final Long birthday) {
         this.birthday = birthday;
     }
 

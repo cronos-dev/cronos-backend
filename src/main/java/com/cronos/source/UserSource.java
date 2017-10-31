@@ -18,12 +18,7 @@ public class UserSource {
     public UserView createUser(final CreateUserRequestBody createUserRequestBody) {
         try (final SessionProvider sessionProvider = new SessionProvider()) {
             final UserDao userDao = new UserDao(sessionProvider);
-            return userDao.addUser(
-                    createUserRequestBody.getFirstName(),
-                    createUserRequestBody.getLastName(),
-                    createUserRequestBody.getEmail(),
-                    createUserRequestBody.getBirthday(),
-                    createUserRequestBody.getGender());
+            return userDao.addUser(createUserRequestBody);
         }
     }
 

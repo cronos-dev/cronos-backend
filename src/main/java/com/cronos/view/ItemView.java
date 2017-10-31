@@ -2,6 +2,8 @@ package com.cronos.view;
 
 import com.cronos.model.Item;
 
+import java.math.BigDecimal;
+
 /**
  * Created by toshikijahja on 10/18/17.
  */
@@ -17,15 +19,23 @@ public class ItemView {
         return item.getId();
     }
 
+    public String getName() {
+        return item.getName();
+    }
+
+    public BigDecimal getPrice() {
+        return item.getPrice();
+    }
+
     public int getRestaurantId() {
         return item.getRestaurant().getId();
     }
 
-    public String getRestaurantName() {
-        return item.getRestaurant().getName();
-    }
-
     public Item.Type getType() {
         return item.getType();
+    }
+
+    public Item.Status getStatus() {
+        return item.getStatus();
     }
 }

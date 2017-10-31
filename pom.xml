@@ -7,41 +7,50 @@
   <version>1.0-SNAPSHOT</version>
   <name>cronos</name>
   <url>http://maven.apache.org</url>
+  <properties>
+    <jersey2.version>2.19</jersey2.version>
+    <jaxrs.version>2.0.1</jaxrs.version>
+  </properties>
   <dependencies>
+    <!-- JAX-RS -->
     <dependency>
-      <groupId>com.sun.jersey</groupId>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+      <version>${jaxrs.version}</version>
+    </dependency>
+    <!-- Jersey 2.19 -->
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-servlet</artifactId>
+      <version>${jersey2.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-server</artifactId>
-      <version>1.12</version>
+      <version>${jersey2.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.sun.jersey</groupId>
+      <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-client</artifactId>
-      <version>1.9</version>
+      <version>${jersey2.version}</version>
     </dependency>
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-servlet</artifactId>
-      <version>1.12</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-json</artifactId>
-      <version>1.9</version>
-    </dependency>
+
     <dependency>
       <groupId>com.owlike</groupId>
       <artifactId>genson</artifactId>
       <version>1.4</version>
     </dependency>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-      <version>4.3.10.Final</version>
-    </dependency>
+    <!-- Mysql Connector -->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.34</version>
+      <version>6.0.5</version>
+    </dependency>
+    <!-- Hibernate 5.2.6 Final -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.2.6.Final</version>
     </dependency>
 
     <dependency>
