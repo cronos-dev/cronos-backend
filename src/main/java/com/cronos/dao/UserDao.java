@@ -1,6 +1,7 @@
 package com.cronos.dao;
 
 import com.cronos.model.User;
+import com.cronos.requestBody.CreateUserRequestBody;
 import com.cronos.view.UserView;
 
 import java.sql.Date;
@@ -14,15 +15,13 @@ public class UserDao extends BaseDao<User> {
         super(sessionProvider, User.class);
     }
 
-    public UserView addUser(final String firstName, final String lastName, final String email,
-                        final long birthday, final String gender) {
+    public UserView addUser(final CreateUserRequestBody createUserRequestBody) {
         getSessionProvider().startTransaction();
         final User user = new User.Builder()
-                .firstName(firstName)
-                .lastName(lastName)
-                .email(email)
-                .birthday(new Date(birthday))
-                .gender(User.Gender.valueOf(gender))
+                .firstName(createUserRequestBody.getFirstName())
+                .lastName(createUserRequestBody.getLastName())
+                .email(createUserRequestBody.getEmail())
+                .gender(User.Gender.valueOf(createUserRequestBody.getGender()))
                 .build();
         getSessionProvider().getSession().save(user);
         getSessionProvider().commitTransaction();

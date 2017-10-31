@@ -16,7 +16,6 @@ public class SessionUtil {
     private SessionUtil() {
         final Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
-
         sessionFactory = configuration.buildSessionFactory();
     }
 

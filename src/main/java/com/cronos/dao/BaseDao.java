@@ -1,5 +1,8 @@
 package com.cronos.dao;
 
+import javax.persistence.Query;
+import java.util.List;
+
 /**
  * Created by toshikijahja on 7/29/17.
  */
@@ -21,5 +24,12 @@ public class BaseDao<T> {
     @SuppressWarnings("unchecked")
     public T getById(final int id) {
         return (T) getSessionProvider().getSession().get(clazz, id);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<T> getByIds(final List<Integer> ids) {
+        final Query query = sessionProvider.getSession().createQuery("FROM " + clazz.getName() + " WHERE id IN :ids");
+        query.setParameter("ids", ids);
+        return query.getResultList();
     }
 }
