@@ -60,10 +60,17 @@
       <scope>test</scope>
     </dependency>
 
+    <!--settings file-->
     <dependency>
       <groupId>commons-configuration</groupId>
       <artifactId>commons-configuration</artifactId>
       <version>1.10</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.stripe</groupId>
+      <artifactId>stripe-java</artifactId>
+      <version>4.2.0</version>
     </dependency>
 
   </dependencies>

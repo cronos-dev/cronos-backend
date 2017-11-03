@@ -6,6 +6,7 @@ package com.cronos.requestBody;
 public class CloseOrderRequestBody {
 
     private int orderId;
+    private String token;
 
     public CloseOrderRequestBody() {
 
@@ -17,5 +18,13 @@ public class CloseOrderRequestBody {
 
     public void setOrderId(final int orderId) {
         this.orderId = orderId;
+    }
+
+    public String getToken() {
+        return this.token;
+    }
+
+    public void setToken(final String token) {
+        this.token = token;
     }
 }

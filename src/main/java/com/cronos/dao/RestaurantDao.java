@@ -14,7 +14,7 @@ public class RestaurantDao extends BaseDao<Restaurant> {
         super(sessionProvider, Restaurant.class);
     }
 
-    public RestaurantView addRestaurant(final CreateRestaurantRequestBody createRestaurantRequestBody) {
+    public RestaurantView createRestaurant(final CreateRestaurantRequestBody createRestaurantRequestBody) {
         getSessionProvider().startTransaction();
         final Restaurant restaurant = new Restaurant.Builder().name(createRestaurantRequestBody.getName()).build();
         getSessionProvider().getSession().save(restaurant);

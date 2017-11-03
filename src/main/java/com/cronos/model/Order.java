@@ -47,7 +47,7 @@ public class Order implements Serializable {
 
     public enum Status {
         OPEN,
-        CLOSE
+        CLOSED
     }
 
     public Order() {

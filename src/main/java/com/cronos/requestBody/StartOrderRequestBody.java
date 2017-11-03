@@ -1,7 +1,5 @@
 package com.cronos.requestBody;
 
-import java.util.List;
-
 /**
  * Created by toshikijahja on 10/30/17.
  */

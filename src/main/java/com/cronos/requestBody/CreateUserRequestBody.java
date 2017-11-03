@@ -10,6 +10,7 @@ public class CreateUserRequestBody {
     private String email;
     private Long birthday;
     private String gender;
+    private String token;
 
     public CreateUserRequestBody() {
 
@@ -53,5 +54,13 @@ public class CreateUserRequestBody {
 
     public void setGender(final String gender) {
         this.gender = gender;
+    }
+
+    public String getToken() {
+        return this.token;
+    }
+
+    public void setToken(final String token) {
+        this.token = token;
     }
 }

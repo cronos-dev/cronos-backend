@@ -41,7 +41,7 @@ public class OrderSource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public OrderView getItem(@PathParam("id") final int id) {
+    public OrderView getOrder(@PathParam("id") final int id) {
         try (final SessionProvider sessionProvider = new SessionProvider()) {
             final OrderDao orderDao = new OrderDao(sessionProvider);
             final Order order= orderDao.getById(id);
