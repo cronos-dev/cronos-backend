@@ -5,6 +5,8 @@ import com.cronos.model.Transaction;
 
 import java.math.BigDecimal;
 
+import static com.cronos.Constants.WHITE_SPACE;
+
 /**
  * Created by toshikijahja on 11/2/17.
  */
@@ -14,17 +16,15 @@ public class TransactionDao extends BaseDao<Transaction> {
         super(sessionProvider, Transaction.class);
     }
 
-    public Transaction createTransaction(final int orderId, final int userId, final BigDecimal amount) {
-        getSessionProvider().startTransaction();
-        final Transaction transaction = new Transaction.Builder()
-                .orderId(orderId)
-                .userId(userId)
-                .amount(amount)
-                .status()
-
-    }
-
-    private String buildDescription(final String restaurantName, final BigDecimal amount, final int orderId) {
-
+    public String buildDescription(final String restaurantName, final BigDecimal amount, final int orderId) {
+        final StringBuilder stringBuilder = new StringBuilder()
+                .append(restaurantName)
+                .append(WHITE_SPACE)
+                .append("$")
+                .append(amount)
+                .append(WHITE_SPACE)
+                .append("#orderId=")
+                .append(orderId);
+        return stringBuilder.toString();
     }
 }

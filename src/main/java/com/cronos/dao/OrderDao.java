@@ -31,12 +31,14 @@ public class OrderDao extends BaseDao<Order> {
     private final StripeService stripeService;
     private final OrderItemDao orderItemDao;
     private final RestaurantDao restaurantDao;
+    private final TransactionDao transactionDao;
 
     public OrderDao(final SessionProvider sessionProvider) {
         super(sessionProvider, Order.class);
         stripeService = new StripeService();
         orderItemDao = new OrderItemDao(sessionProvider);
         restaurantDao = new RestaurantDao(sessionProvider);
+        transactionDao = new TransactionDao(sessionProvider);
     }
 
     public OrderView startOrder(final StartOrderRequestBody startOrderRequestBody) {
@@ -65,7 +67,8 @@ public class OrderDao extends BaseDao<Order> {
                 .build();
 
         try {
-            final String chargeId = stripeService.charge(closeOrderRequestBody.getToken(), String.valueOf(amount), restaurant.getName());
+            final String description = transactionDao.buildDescription(restaurant.getName(), amount, order.getId());
+            final String chargeId = stripeService.charge(closeOrderRequestBody.getToken(), String.valueOf(amount), description);
             transaction.setChargeId(chargeId);
             transaction.setStatus(COMPLETED);
             order.setCloseTime(new Date());

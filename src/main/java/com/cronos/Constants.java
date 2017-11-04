@@ -20,4 +20,5 @@ public final class Constants {
     public static final String DESCRIPTION = "description";
     public static final String USD = "usd";
 
+    public static final String WHITE_SPACE = " ";
 }

@@ -21,10 +21,10 @@ public class OrderItemDao extends BaseDao<OrderItem> {
 
     public BigDecimal calculateTotalPrice(final int orderId) {
         final Query query = getSessionProvider().getSession().createQuery(
-                "SELECT SUM(oi.quantity * i.price) " +
+                "SELECT SUM(oi.quantity) " +
                         "FROM OrderItem oi " +
-                        "INNER JOIN Item i on oi.itemId = i.id " +
-                        "WHERE oi.orderId = :orderId");
+//                        "INNER JOIN Item i on oi.itemId = i.id " +
+                        "WHERE oi.order.id = :orderId");
         query.setParameter("orderId", orderId);
         return (BigDecimal) query.getResultList().get(0);
     }
