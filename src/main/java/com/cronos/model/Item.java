@@ -25,7 +25,7 @@ public class Item implements Serializable {
     private BigDecimal price;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "restaurantId", foreignKey = @ForeignKey(name = "FK_RESTAURANT"))
+    @JoinColumn(name = "restaurantId")
     private Restaurant restaurant;
 
     @Column
@@ -36,7 +36,7 @@ public class Item implements Serializable {
     @Enumerated(EnumType.STRING)
     private Status status = ACTIVE;
 
-    @OneToMany(mappedBy = "pk.item")
+    @OneToMany(mappedBy = "item")
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();
 
     public enum Type {

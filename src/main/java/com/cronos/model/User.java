@@ -1,9 +1,6 @@
 package com.cronos.model;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 public class User {
@@ -25,6 +22,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Column (nullable = false)
+    private String stripeCustomerId;
+
     public enum Gender {
         MALE, FEMALE;
     }
@@ -38,6 +38,7 @@ public class User {
         setLastName(builder.lastName);
         setEmail(builder.email);
         setGender(builder.gender);
+        setStripeCustomerId(builder.stripeCustomerId);
     }
 
     public int getId() {
@@ -80,11 +81,20 @@ public class User {
         this.gender = gender;
     }
 
+    public String getStripeCustomerId() {
+        return this.stripeCustomerId;
+    }
+
+    public void setStripeCustomerId(final String stripeCustomerId) {
+        this.stripeCustomerId = stripeCustomerId;
+    }
+
     public static class Builder {
         private String firstName;
         private String lastName;
         private String email;
         private Gender gender;
+        private String stripeCustomerId;
 
         public Builder firstName(final String firstName) {
             this.firstName = firstName;
@@ -103,6 +113,11 @@ public class User {
 
         public Builder gender(final Gender gender) {
             this.gender = gender;
+            return this;
+        }
+
+        public Builder stripeCustomerId(final String stripeCustomerId) {
+            this.stripeCustomerId = stripeCustomerId;
             return this;
         }
 

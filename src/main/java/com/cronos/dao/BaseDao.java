@@ -1,7 +1,10 @@
 package com.cronos.dao;
 
-import javax.persistence.Query;
+import org.hibernate.Query;
+
 import java.util.List;
+
+import static com.cronos.Constants.DATA;
 
 /**
  * Created by toshikijahja on 7/29/17.
@@ -28,8 +31,31 @@ public class BaseDao<T> {
 
     @SuppressWarnings("unchecked")
     public List<T> getByIds(final List<Integer> ids) {
-        final Query query = sessionProvider.getSession().createQuery("FROM " + clazz.getName() + " WHERE id IN :ids");
-        query.setParameter("ids", ids);
-        return query.getResultList();
+        final Query query = getSessionProvider().getSession().createQuery("FROM " + clazz.getName() + " WHERE id IN :ids");
+        query.setParameterList("ids", ids);
+        return query.list();
     }
+
+    @SuppressWarnings("unchecked")
+    public List<T> getByField(final String field, final String data) {
+        final Query query = getSessionProvider().getSession().createQuery("FROM " + clazz.getName() + " WHERE " + field + " = :" + DATA);
+        query.setParameter(DATA, data);
+        return query.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<T> getByField(final String field, final Integer data) {
+        final Query query = getSessionProvider().getSession().createQuery("FROM " + clazz.getName() + " WHERE " + field + " = :" + DATA);
+        query.setParameter(DATA, data);
+        return query.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<T> getByField(final String field, final Boolean data) {
+        final Query query = getSessionProvider().getSession().createQuery("FROM " + clazz.getName() + " WHERE " + field + " = :" + DATA);
+        query.setParameter(DATA, data);
+        return query.list();
+    }
+
+
 }

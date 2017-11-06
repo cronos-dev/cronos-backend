@@ -46,11 +46,16 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>6.0.5</version>
     </dependency>
-    <!-- Hibernate 5.2.6 Final -->
+    <!-- Hibernate 4.1.9.Final -->
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>5.2.6.Final</version>
+      <version>4.1.9.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>5.2.4.Final</version>
     </dependency>
 
     <dependency>
@@ -60,10 +65,17 @@
       <scope>test</scope>
     </dependency>
 
+    <!--settings file-->
     <dependency>
       <groupId>commons-configuration</groupId>
       <artifactId>commons-configuration</artifactId>
       <version>1.10</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.stripe</groupId>
+      <artifactId>stripe-java</artifactId>
+      <version>4.2.0</version>
     </dependency>
 
   </dependencies>

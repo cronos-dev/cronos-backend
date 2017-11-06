@@ -10,6 +10,7 @@ public class StartOrderRequestBody {
     private int restaurantId;
     private int tableId;
     private int userId;
+    private List<OrderItemRequestBody> orderItems;
 
     public StartOrderRequestBody() {
 
@@ -37,6 +38,14 @@ public class StartOrderRequestBody {
 
     public void setUserId(final int userId) {
         this.userId = userId;
+    }
+
+    public List<OrderItemRequestBody> getOrderItems() {
+        return this.orderItems;
+    }
+
+    public void setOrderItems(final List<OrderItemRequestBody> orderItems) {
+        this.orderItems = orderItems;
     }
 
 }

@@ -1,14 +1,10 @@
 package com.cronos.source;
 
 import com.cronos.dao.ItemDao;
-import com.cronos.dao.RestaurantDao;
 import com.cronos.dao.SessionProvider;
 import com.cronos.model.Item;
-import com.cronos.model.Restaurant;
 import com.cronos.requestBody.CreateItemRequestBody;
-import com.cronos.requestBody.CreateRestaurantRequestBody;
 import com.cronos.view.ItemView;
-import com.cronos.view.RestaurantView;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

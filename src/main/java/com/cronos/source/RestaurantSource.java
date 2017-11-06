@@ -21,7 +21,7 @@ public class RestaurantSource {
     public RestaurantView createRestaurant(final CreateRestaurantRequestBody createRestaurantRequestBody) {
         try (final SessionProvider sessionProvider = new SessionProvider()) {
             final RestaurantDao restaurantDao = new RestaurantDao(sessionProvider);
-            return restaurantDao.addRestaurant(createRestaurantRequestBody);
+            return restaurantDao.createRestaurant(createRestaurantRequestBody);
         }
     }
 

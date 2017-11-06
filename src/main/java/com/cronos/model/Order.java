@@ -28,7 +28,7 @@ public class Order implements Serializable {
     private int userId;
 
     @Column
-    private BigDecimal totalPrice;
+    private BigDecimal amount;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -42,12 +42,12 @@ public class Order implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date closeTime = null;
 
-    @OneToMany(mappedBy = "pk.order")
+    @OneToMany(mappedBy = "order")
     private Set<OrderItem> orderItems = new HashSet<>();
 
     public enum Status {
         OPEN,
-        CLOSE
+        CLOSED
     }
 
     public Order() {
@@ -58,7 +58,7 @@ public class Order implements Serializable {
         setRestaurantId(builder.restaurantId);
         setTableId(builder.tableId);
         setUserId(builder.userId);
-        setTotalPrice(builder.totalPrice);
+        setAmount(builder.amount);
         setStatus(builder.status);
         setOpenTime(builder.openTime);
         setCloseTime(builder.closeTime);
@@ -97,12 +97,12 @@ public class Order implements Serializable {
         this.userId = userId;
     }
 
-    public BigDecimal getTotalPrice() {
-        return this.totalPrice;
+    public BigDecimal getAmount() {
+        return this.amount;
     }
 
-    public void setTotalPrice(final BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setAmount(final BigDecimal amount) {
+        this.amount = amount;
     }
 
     public Status getStatus() {
@@ -141,7 +141,7 @@ public class Order implements Serializable {
         private int restaurantId;
         private int tableId;
         private int userId;
-        private BigDecimal totalPrice = BigDecimal.ZERO;
+        private BigDecimal amount = BigDecimal.ZERO;
         private Status status;
         private Date openTime = new Date();
         private Date closeTime;
@@ -162,8 +162,8 @@ public class Order implements Serializable {
             return this;
         }
 
-        public Builder totalPrice(final BigDecimal totalPrice) {
-            this.totalPrice = totalPrice;
+        public Builder amount(final BigDecimal amount) {
+            this.amount = amount;
             return this;
         }
 

@@ -16,5 +16,6 @@
         <mapping class="com.cronos.model.Item"/>
         <mapping class="com.cronos.model.Order"/>
         <mapping class="com.cronos.model.OrderItem"/>
+        <mapping class="com.cronos.model.Transaction"/>
     </session-factory>
 </hibernate-configuration>

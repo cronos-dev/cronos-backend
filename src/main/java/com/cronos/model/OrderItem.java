@@ -7,19 +7,17 @@ import java.io.Serializable;
  * Created by toshikijahja on 10/31/17.
  */
 @Entity
-@AssociationOverrides({
-        @AssociationOverride(name = "pk.order", joinColumns = @JoinColumn(name = "orderId")),
-        @AssociationOverride(name = "pk.item", joinColumns = @JoinColumn(name = "itemId"))
-})
+@Table(name = "`OrderItem`")
 public class OrderItem implements Serializable {
 
-    @EmbeddedId
-    private OrderItemId pk = new OrderItemId();
-
-    @Transient
+    @Id
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "orderId")
     private Order order;
 
-    @Transient
+    @Id
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "itemId")
     private Item item;
 
     @Column
@@ -33,14 +31,6 @@ public class OrderItem implements Serializable {
         setOrder(builder.order);
         setItem(builder.item);
         setQuantity(builder.quantity);
-    }
-
-    public OrderItemId getPk() {
-        return pk;
-    }
-
-    public void setPk(final OrderItemId pk) {
-        this.pk = pk;
     }
 
     public Order getOrder() {
