@@ -1,6 +1,7 @@
 package com.cronos.dao;
 
-import javax.persistence.Query;
+import org.hibernate.Query;
+
 import java.util.List;
 
 import static com.cronos.Constants.DATA;
@@ -31,29 +32,29 @@ public class BaseDao<T> {
     @SuppressWarnings("unchecked")
     public List<T> getByIds(final List<Integer> ids) {
         final Query query = getSessionProvider().getSession().createQuery("FROM " + clazz.getName() + " WHERE id IN :ids");
-        query.setParameter("ids", ids);
-        return query.getResultList();
+        query.setParameterList("ids", ids);
+        return query.list();
     }
 
     @SuppressWarnings("unchecked")
     public List<T> getByField(final String field, final String data) {
-        final Query query = getSessionProvider().getSession().createQuery("FROM " + clazz.getName() + " WHERE " + field + DATA);
+        final Query query = getSessionProvider().getSession().createQuery("FROM " + clazz.getName() + " WHERE " + field + " = :" + DATA);
         query.setParameter(DATA, data);
-        return query.getResultList();
+        return query.list();
     }
 
     @SuppressWarnings("unchecked")
     public List<T> getByField(final String field, final Integer data) {
-        final Query query = getSessionProvider().getSession().createQuery("FROM " + clazz.getName() + " WHERE " + field + DATA);
+        final Query query = getSessionProvider().getSession().createQuery("FROM " + clazz.getName() + " WHERE " + field + " = :" + DATA);
         query.setParameter(DATA, data);
-        return query.getResultList();
+        return query.list();
     }
 
     @SuppressWarnings("unchecked")
     public List<T> getByField(final String field, final Boolean data) {
-        final Query query = getSessionProvider().getSession().createQuery("FROM " + clazz.getName() + " WHERE " + field + DATA);
+        final Query query = getSessionProvider().getSession().createQuery("FROM " + clazz.getName() + " WHERE " + field + " = :" + DATA);
         query.setParameter(DATA, data);
-        return query.getResultList();
+        return query.list();
     }
 
 

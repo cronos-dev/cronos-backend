@@ -41,7 +41,7 @@ public class OrderDao extends BaseDao<Order> {
         transactionDao = new TransactionDao(sessionProvider);
     }
 
-    public OrderView startOrder(final StartOrderRequestBody startOrderRequestBody) {
+    public Order startOrder(final StartOrderRequestBody startOrderRequestBody) {
         getSessionProvider().startTransaction();
         final Order order = new Order.Builder()
                 .restaurantId(startOrderRequestBody.getRestaurantId())
@@ -52,14 +52,18 @@ public class OrderDao extends BaseDao<Order> {
                 .build();
         getSessionProvider().getSession().save(order);
         getSessionProvider().commitTransaction();
-        return new OrderView(order);
+        return order;
     }
 
     public OrderView closeOrder(final CloseOrderRequestBody closeOrderRequestBody) {
         getSessionProvider().startTransaction();
         final Order order = getById(closeOrderRequestBody.getOrderId());
         final Restaurant restaurant = restaurantDao.getById(order.getRestaurantId());
-        final BigDecimal amount = orderItemDao.calculateTotalPrice(order.getId());
+        final List<OrderItem> orderItems = orderItemDao.getByOrderId(order.getId());
+        final BigDecimal amount = orderItems.stream()
+                .map(orderItem ->
+                        orderItem.getItem().getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
         final Transaction transaction = new Transaction.Builder()
                 .amount(amount)
                 .userId(order.getUserId())
@@ -68,17 +72,19 @@ public class OrderDao extends BaseDao<Order> {
 
         try {
             final String description = transactionDao.buildDescription(restaurant.getName(), amount, order.getId());
-            final String chargeId = stripeService.charge(closeOrderRequestBody.getToken(), String.valueOf(amount), description);
+//            final String chargeId = stripeService.charge(closeOrderRequestBody.getToken(), String.valueOf(amount), description);
+            final String chargeId = "chargeId";
             transaction.setChargeId(chargeId);
             transaction.setStatus(COMPLETED);
             order.setCloseTime(new Date());
             order.setStatus(CLOSED);
-        } catch (APIConnectionException | AuthenticationException | InvalidRequestException | APIException | CardException e) {
-            e.printStackTrace();
-            order.setCloseTime(null);
-            order.setStatus(OPEN);
-            transaction.setStatus(FAILED);
-        }
+            order.setAmount(amount);
+//        } catch (APIConnectionException | AuthenticationException | InvalidRequestException | APIException | CardException e) {
+//            e.printStackTrace();
+//            order.setCloseTime(null);
+//            order.setStatus(OPEN);
+//            transaction.setStatus(FAILED);
+        } catch (final Exception e) {}
 
         getSessionProvider().getSession().save(transaction);
         getSessionProvider().commitTransaction();
