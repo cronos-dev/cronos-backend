@@ -1,1 +1,1 @@
-web:    mvn clean install tomcat7:run
+web: sh target/bin/webapp
