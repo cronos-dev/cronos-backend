@@ -1,1 +1,1 @@
-web: sh target/bin/webapp
+web: tomcat7:run
