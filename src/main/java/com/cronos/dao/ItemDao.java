@@ -32,6 +32,7 @@ public class ItemDao extends BaseDao<Item> {
                 .restaurant(restaurant)
                 .type(createItemRequestBody.getType())
                 .enabled(createItemRequestBody.isEnabled())
+                .description(createItemRequestBody.getDescription())
                 .build();
         getSessionProvider().getSession().save(item);
         getSessionProvider().commitTransaction();

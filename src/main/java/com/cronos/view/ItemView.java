@@ -39,4 +39,8 @@ public class ItemView {
         return item.isEnabled();
     }
 
+    public String getDescription() {
+        return item.getDescription();
+    }
+
 }
