@@ -7,6 +7,7 @@ import com.cronos.model.Transaction;
 import com.cronos.requestBody.CloseOrderRequestBody;
 import com.cronos.requestBody.StartOrderRequestBody;
 import com.cronos.service.StripeService;
+import com.cronos.view.OrderItemView;
 import com.cronos.view.OrderView;
 import com.stripe.Stripe;
 import com.stripe.exception.*;
@@ -16,6 +17,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.cronos.Constants.DATA;
 import static com.cronos.model.Order.Status.CLOSED;
@@ -41,29 +44,31 @@ public class OrderDao extends BaseDao<Order> {
         transactionDao = new TransactionDao(sessionProvider);
     }
 
-    public Order startOrder(final StartOrderRequestBody startOrderRequestBody) {
+    public OrderView startOrder(final StartOrderRequestBody startOrderRequestBody) {
         getSessionProvider().startTransaction();
         final Order order = new Order.Builder()
                 .restaurantId(startOrderRequestBody.getRestaurantId())
                 .tableId(startOrderRequestBody.getTableId())
                 .userId(startOrderRequestBody.getUserId())
+                .type(startOrderRequestBody.getType())
+                .notes(startOrderRequestBody.getNotes())
                 .status(OPEN)
                 .openTime(new Date())
                 .build();
         getSessionProvider().getSession().save(order);
+        final List<OrderItemView> orderItems = orderItemDao.addOrderItem(order, startOrderRequestBody.getOrderItems());
+        order.setAmount(calculateAmount(orderItems));
         getSessionProvider().commitTransaction();
-        return order;
+        return new OrderView(order, orderItems);
     }
 
     public OrderView closeOrder(final CloseOrderRequestBody closeOrderRequestBody) {
         getSessionProvider().startTransaction();
         final Order order = getById(closeOrderRequestBody.getOrderId());
         final Restaurant restaurant = restaurantDao.getById(order.getRestaurantId());
-        final List<OrderItem> orderItems = orderItemDao.getByOrderId(order.getId());
-        final BigDecimal amount = orderItems.stream()
-                .map(orderItem ->
-                        orderItem.getItem().getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        final List<OrderItemView> orderItems = orderItemDao.getByOrderId(order.getId());
+        final BigDecimal amount = calculateAmount(orderItems);
+        order.setAmount(amount);
         final Transaction transaction = new Transaction.Builder()
                 .amount(amount)
                 .userId(order.getUserId())
@@ -88,10 +93,42 @@ public class OrderDao extends BaseDao<Order> {
 
         getSessionProvider().getSession().save(transaction);
         getSessionProvider().commitTransaction();
-        return new OrderView(order);
+        return new OrderView(order, orderItems);
     }
 
+    public Order addNotes(final int orderId, final String notes) {
+        getSessionProvider().startTransaction();
+        final Order order = getById(orderId);
+        order.setNotes(notes);
+        getSessionProvider().commitTransaction();
+        return order;
+    }
 
+    public Order updateAmount(final int orderId, final List<OrderItemView> orderItems) {
+        getSessionProvider().startTransaction();
+        final Order order = getById(orderId);
+        order.setAmount(calculateAmount(orderItems));
+        getSessionProvider().commitTransaction();
+        return order;
+    }
+
+    private BigDecimal calculateAmount(final List<OrderItemView> orderItems) {
+        return orderItems.stream()
+                .filter(orderItem -> OrderItem.Status.CANCELED != orderItem.getStatus())
+                .map(orderItem -> orderItem.getItem().getPrice())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public List<OrderView> getByUserId(final int userId) {
+        final List<Order> orders = getByField("userId", userId);
+        final List<Integer> orderIds = orders.stream().map(Order::getId).collect(Collectors.toList());
+        final List<OrderItemView> orderItems = orderItemDao.getByOrderIds(orderIds);
+        final Map<Integer, List<OrderItemView>> orderIdToOrderItems = orderItems.stream()
+                .collect(Collectors.groupingBy(OrderItemView::getOrderId));
+        return orders.stream()
+                .map(order -> new OrderView(order, orderIdToOrderItems.get(order.getId())))
+                .collect(Collectors.toList());
+    }
 
 }
 

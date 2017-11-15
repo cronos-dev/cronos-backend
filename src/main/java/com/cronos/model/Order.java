@@ -35,6 +35,10 @@ public class Order implements Serializable {
     private Status status;
 
     @Column
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date openTime = null;
 
@@ -45,9 +49,17 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "order")
     private Set<OrderItem> orderItems = new HashSet<>();
 
+    @Column(columnDefinition = "text")
+    private String notes;
+
     public enum Status {
         OPEN,
         CLOSED
+    }
+
+    public enum Type {
+        TAKEOUT,
+        DINE_IN
     }
 
     public Order() {
@@ -60,9 +72,11 @@ public class Order implements Serializable {
         setUserId(builder.userId);
         setAmount(builder.amount);
         setStatus(builder.status);
+        setType(builder.type);
         setOpenTime(builder.openTime);
         setCloseTime(builder.closeTime);
         setOrderItem(builder.orderItems);
+        setNotes(builder.notes);
     }
 
     public int getId() {
@@ -113,6 +127,14 @@ public class Order implements Serializable {
         this.status = status;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(final Type type) {
+        this.type = type;
+    }
+
     public Date getOpenTime() {
         return this.openTime;
     }
@@ -137,15 +159,25 @@ public class Order implements Serializable {
         this.orderItems = orderItems;
     }
 
+    public String getNotes() {
+        return this.notes;
+    }
+
+    public void setNotes(final String notes) {
+        this.notes = notes;
+    }
+
     public static class Builder {
         private int restaurantId;
         private int tableId;
         private int userId;
         private BigDecimal amount = BigDecimal.ZERO;
         private Status status;
+        private Type type;
         private Date openTime = new Date();
         private Date closeTime;
         private Set<OrderItem> orderItems = new HashSet<>();
+        private String notes;
 
         public Builder restaurantId(final int restaurantId) {
             this.restaurantId = restaurantId;
@@ -172,6 +204,11 @@ public class Order implements Serializable {
             return this;
         }
 
+        public Builder type(final Type type) {
+            this.type = type;
+            return this;
+        }
+
         public Builder openTime(final Date openTime) {
             this.openTime = openTime;
             return this;
@@ -184,6 +221,11 @@ public class Order implements Serializable {
 
         public Builder orderItems(final Set<OrderItem> orderItems) {
             this.orderItems = orderItems;
+            return this;
+        }
+
+        public Builder notes(final String notes) {
+            this.notes = notes;
             return this;
         }
 

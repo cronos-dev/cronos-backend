@@ -1,5 +1,7 @@
 package com.cronos.requestBody;
 
+import com.cronos.model.Order;
+
 import java.util.List;
 
 /**
@@ -10,7 +12,9 @@ public class StartOrderRequestBody {
     private int restaurantId;
     private int tableId;
     private int userId;
+    private Order.Type type = Order.Type.DINE_IN;
     private List<OrderItemRequestBody> orderItems;
+    private String notes;
 
     public StartOrderRequestBody() {
 
@@ -40,12 +44,28 @@ public class StartOrderRequestBody {
         this.userId = userId;
     }
 
+    public Order.Type getType() {
+        return this.type;
+    }
+
+    public void setType(final Order.Type type) {
+        this.type = type;
+    }
+
     public List<OrderItemRequestBody> getOrderItems() {
         return this.orderItems;
     }
 
     public void setOrderItems(final List<OrderItemRequestBody> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public String getNotes() {
+        return this.notes;
+    }
+
+    public void setNotes(final String notes) {
+        this.notes = notes;
     }
 
 }

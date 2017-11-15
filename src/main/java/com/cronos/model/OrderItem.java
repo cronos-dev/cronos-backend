@@ -11,17 +11,31 @@ import java.io.Serializable;
 public class OrderItem implements Serializable {
 
     @Id
+    @GeneratedValue
+    @Column
+    private int id;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "orderId")
     private Order order;
 
-    @Id
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "itemId")
     private Item item;
 
+    @Column(columnDefinition = "text")
+    private String notes;
+
     @Column
-    private int quantity;
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public enum Status {
+        ORDERED,
+        COOKING,
+        SERVED,
+        CANCELED
+    }
 
     public OrderItem() {
 
@@ -30,7 +44,16 @@ public class OrderItem implements Serializable {
     public OrderItem(final Builder builder) {
         setOrder(builder.order);
         setItem(builder.item);
-        setQuantity(builder.quantity);
+        setNotes(builder.notes);
+        setStatus(builder.status);
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(final int id) {
+        this.id = id;
     }
 
     public Order getOrder() {
@@ -49,28 +72,27 @@ public class OrderItem implements Serializable {
         this.item = item;
     }
 
-    public int getQuantity() {
-        return this.quantity;
+    public String getNotes() {
+        return this.notes;
     }
 
-    public void setQuantity(final int quantity) {
-        this.quantity = quantity;
+    public void setNotes(final String notes) {
+        this.notes = notes;
     }
 
-    public void addQuantity() {
-        this.quantity += 1;
+    public Status getStatus() {
+        return this.status;
     }
 
-    public void removeQuantity() {
-        if (this.quantity > 0) {
-            this.quantity -= 1;
-        }
+    public void setStatus(final Status status) {
+        this.status = status;
     }
 
     public static class Builder {
         private Order order;
         private Item item;
-        private int quantity = 1;
+        private String notes;
+        private Status status;
 
         public Builder order(final Order order) {
             this.order = order;
@@ -82,8 +104,13 @@ public class OrderItem implements Serializable {
             return this;
         }
 
-        public Builder quantity(final int quantity) {
-            this.quantity = quantity;
+        public Builder notes(final String notes) {
+            this.notes = notes;
+            return this;
+        }
+
+        public Builder status(final Status status) {
+            this.status = status;
             return this;
         }
 

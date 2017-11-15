@@ -8,6 +8,7 @@ import com.cronos.view.ItemView;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
  * Created by toshikijahja on 10/18/17.
@@ -33,6 +34,17 @@ public class ItemSource {
             final ItemDao itemDao = new ItemDao(sessionProvider);
             final Item item = itemDao.getById(id);
             return new ItemView(item);
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ItemView> getItemByRestaurantId(@QueryParam("restaurantId") final int restaurantId,
+                                                @QueryParam("enabled") final Boolean enabled,
+                                                @QueryParam("type") final List<Item.Type> types) {
+        try (final SessionProvider sessionProvider = new SessionProvider()) {
+            final ItemDao itemDao = new ItemDao(sessionProvider);
+            return itemDao.getByRestaurantIdEnabledType(restaurantId, enabled, types);
         }
     }
 }
