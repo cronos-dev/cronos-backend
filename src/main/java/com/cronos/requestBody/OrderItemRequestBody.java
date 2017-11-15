@@ -6,7 +6,7 @@ package com.cronos.requestBody;
 public class OrderItemRequestBody {
 
     private int itemId;
-    private int quantity;
+    private String notes;
 
     public OrderItemRequestBody() {
 
@@ -20,11 +20,12 @@ public class OrderItemRequestBody {
         this.itemId = itemId;
     }
 
-    public int getQuantity() {
-        return this.quantity;
+    public String getNotes() {
+        return this.notes;
     }
 
-    public void setQuantity(final int quantity) {
-        this.quantity = quantity;
+    public void setNotes(final String notes) {
+        this.notes = notes;
     }
+
 }

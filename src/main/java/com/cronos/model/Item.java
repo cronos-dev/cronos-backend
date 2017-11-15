@@ -6,8 +6,6 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.cronos.model.Item.Status.ACTIVE;
-
 /**
  * Created by toshikijahja on 7/29/17.
  */
@@ -33,8 +31,7 @@ public class Item implements Serializable {
     private Type type;
 
     @Column
-    @Enumerated(EnumType.STRING)
-    private Status status = ACTIVE;
+    private boolean enabled;
 
     @OneToMany(mappedBy = "item")
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();
@@ -46,11 +43,6 @@ public class Item implements Serializable {
         BEVERAGE
     }
 
-    public enum Status {
-        ACTIVE,
-        INACTIVE
-    }
-
     public Item() {
 
     }
@@ -60,7 +52,7 @@ public class Item implements Serializable {
         setPrice(builder.price);
         setRestaurant(builder.restaurant);
         setType(builder.type);
-        setStatus(builder.status);
+        setEnabled(builder.enabled);
     }
 
     public int getId() {
@@ -103,12 +95,12 @@ public class Item implements Serializable {
         this.type = type;
     }
 
-    public Status getStatus() {
-        return status;
+    public boolean isEnabled() {
+        return this.enabled;
     }
 
-    public void setStatus(final Status status) {
-        this.status = status;
+    public void setEnabled(final boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Set<OrderItem> getOrderItems() {
@@ -124,7 +116,7 @@ public class Item implements Serializable {
         private BigDecimal price;
         private Restaurant restaurant;
         private Type type;
-        private Status status;
+        private boolean enabled;
 
         public Builder name(final String name) {
             this.name = name;
@@ -146,8 +138,8 @@ public class Item implements Serializable {
             return this;
         }
 
-        public Builder status(final Status status) {
-            this.status = status;
+        public Builder enabled(final boolean enabled) {
+            this.enabled = enabled;
             return this;
         }
 

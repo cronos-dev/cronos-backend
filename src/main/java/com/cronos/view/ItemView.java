@@ -35,7 +35,8 @@ public class ItemView {
         return item.getType();
     }
 
-    public Item.Status getStatus() {
-        return item.getStatus();
+    public boolean isEnabled() {
+        return item.isEnabled();
     }
+
 }

@@ -12,7 +12,7 @@ public class CreateItemRequestBody {
     private BigDecimal price;
     private int restaurantId;
     private Item.Type type;
-    private Item.Status status = Item.Status.ACTIVE;
+    private boolean enabled = true;
 
     public CreateItemRequestBody() {
 
@@ -50,11 +50,11 @@ public class CreateItemRequestBody {
         this.type = type;
     }
 
-    public Item.Status getStatus() {
-        return this.status;
+    public boolean isEnabled() {
+        return this.enabled;
     }
 
-    public void setStatus(final Item.Status status) {
-        this.status = status;
+    public void setEnabled(final boolean enabled) {
+        this.enabled = enabled;
     }
 }
