@@ -36,6 +36,9 @@ public class Item implements Serializable {
     @OneToMany(mappedBy = "item")
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();
 
+    @Column(columnDefinition = "text")
+    private String description;
+
     public enum Type {
         APPETIZER,
         MAIN,
@@ -53,6 +56,7 @@ public class Item implements Serializable {
         setRestaurant(builder.restaurant);
         setType(builder.type);
         setEnabled(builder.enabled);
+        setDescription(builder.description);
     }
 
     public int getId() {
@@ -111,12 +115,21 @@ public class Item implements Serializable {
         this.orderItems = orderItems;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
     public static class Builder {
         private String name;
         private BigDecimal price;
         private Restaurant restaurant;
         private Type type;
         private boolean enabled;
+        private String description;
 
         public Builder name(final String name) {
             this.name = name;
@@ -140,6 +153,11 @@ public class Item implements Serializable {
 
         public Builder enabled(final boolean enabled) {
             this.enabled = enabled;
+            return this;
+        }
+
+        public Builder description(final String description) {
+            this.description = description;
             return this;
         }
 

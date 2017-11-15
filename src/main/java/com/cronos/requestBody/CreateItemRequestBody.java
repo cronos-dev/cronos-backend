@@ -13,6 +13,7 @@ public class CreateItemRequestBody {
     private int restaurantId;
     private Item.Type type;
     private boolean enabled = true;
+    private String description;
 
     public CreateItemRequestBody() {
 
@@ -56,5 +57,13 @@ public class CreateItemRequestBody {
 
     public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
     }
 }
